@@ -21,4 +21,4 @@ RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
 # Set the command to run your app
-CMD ["gunicorn", "amit-banik-tcp-face-app.wsgi"]
+CMD ["gunicorn", "TCP_facial_recognition_project.wsgi"]
