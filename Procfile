@@ -1,0 +1,1 @@
+web: gunicorn tcp-face-app.wsgi
