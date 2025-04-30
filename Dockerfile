@@ -28,9 +28,4 @@ RUN pip install -r requirements.txt
 RUN python manage.py collectstatic --noinput
 
 # Launch Gunicorn with 1 threaded worker and a longer timeout
-CMD ["gunicorn",
-     "TCP_facial_recognition_project.wsgi",
-     "--workers", "1",
-     "--worker-class", "gthread",
-     "--threads", "2",
-     "--timeout", "300"]
+CMD ["gunicorn", "TCP_facial_recognition_project.wsgi", "--workers", "1", "--worker-class", "gthread", "--threads", "2", "--timeout", "300"]
