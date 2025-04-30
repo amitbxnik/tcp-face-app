@@ -1,6 +1,7 @@
+# Use the slim Python image
 FROM python:3.10-slim
 
-# Install system packages needed for OpenCV, dlib, and static file support
+# Install system packages for dlib, OpenCV, staticfiles, and threading
 RUN apt-get update && apt-get install -y \
     build-essential \
     cmake \
@@ -11,20 +12,25 @@ RUN apt-get update && apt-get install -y \
     libgl1 \
     libglib2.0-0 \
     ffmpeg \
-    && rm -rf /var/lib/apt/lists/*
+  && rm -rf /var/lib/apt/lists/*
 
 # Set working directory
 WORKDIR /app
 
-# Copy project files
+# Copy your code
 COPY . .
 
-# Upgrade pip and install Python dependencies
+# Install Python dependencies
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
-# Collect static files
+# Collect static assets
 RUN python manage.py collectstatic --noinput
 
-# Run the Django app with Gunicorn
-CMD ["gunicorn", "TCP_facial_recognition_project.wsgi"]
+# Launch Gunicorn with 1 threaded worker and a longer timeout
+CMD ["gunicorn",
+     "TCP_facial_recognition_project.wsgi",
+     "--workers", "1",
+     "--worker-class", "gthread",
+     "--threads", "2",
+     "--timeout", "300"]
