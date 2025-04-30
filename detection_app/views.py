@@ -11,9 +11,13 @@ from queue import Queue
 import time
 
 from faceEngine import imageFacialRecognition, liveFacialRecognition, scanKnownFaces
-
-scanKnownFaces()
-
+faces_loaded = False
+def ensure_faces_loaded():
+    global faces_loaded
+    if not faces_loaded:
+        scanKnownFaces()
+        faces_loaded = True
+       
 camera = None
 frame_queue = Queue(maxsize=2) # holds a maximum of 2 frames for processing
 processed_frame = None
@@ -83,10 +87,12 @@ def gen_frames():
 
 def video_feed(request):
     # streams the processed video to the frontend
+    ensure_faces_loaded()
     return StreamingHttpResponse(gen_frames(), 
                                 content_type="multipart/x-mixed-replace; boundary=frame")
 
 def upload_image(request):
+    ensure_faces_loaded()
     if request.method == "POST" and request.FILES.get("image"):
         image_file = request.FILES["image"]
 
@@ -109,6 +115,7 @@ def upload_image(request):
 
 def add_known_face(request):
     # method for users to add any faces of their choosing to database
+    ensure_faces_loaded()
     if request.method == "POST" and request.FILES.get("face_image"):
         face_image = request.FILES["face_image"]
         person_name = request.POST.get("person_name", "").strip()
