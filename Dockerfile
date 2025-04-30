@@ -1,7 +1,7 @@
-# Use the slim Python image
+# Use a lightweight Python image
 FROM python:3.10-slim
 
-# Install system packages for dlib, OpenCV, staticfiles, and threading
+# Install system dependencies for dlib, OpenCV, and static file support
 RUN apt-get update && apt-get install -y \
     build-essential \
     cmake \
@@ -17,15 +17,19 @@ RUN apt-get update && apt-get install -y \
 # Set working directory
 WORKDIR /app
 
-# Copy your code
+# Copy in your Django project
 COPY . .
 
-# Install Python dependencies
+# Install Python requirements
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
 # Collect static assets
 RUN python manage.py collectstatic --noinput
 
-# Launch Gunicorn with 1 threaded worker and a longer timeout
-CMD ["gunicorn", "TCP_facial_recognition_project.wsgi", "--workers", "1", "--worker-class", "gthread", "--threads", "2", "--timeout", "300"]
+# Start the server: 1 threaded worker, longer timeout for heavy imports
+CMD gunicorn TCP_facial_recognition_project.wsgi \
+    --workers 1 \
+    --worker-class gthread \
+    --threads 2 \
+    --timeout 300
