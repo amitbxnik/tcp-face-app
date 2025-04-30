@@ -1,6 +1,6 @@
 FROM python:3.10-slim
 
-# Install build tools and system libs needed for OpenCV + dlib
+# Install system packages needed for OpenCV, dlib, and static file support
 RUN apt-get update && apt-get install -y \
     build-essential \
     cmake \
@@ -8,7 +8,9 @@ RUN apt-get update && apt-get install -y \
     libopenblas-dev \
     liblapack-dev \
     libx11-dev \
-    libgl1 \                         
+    libgl1 \
+    libglib2.0-0 \
+    ffmpeg \
     && rm -rf /var/lib/apt/lists/*
 
 # Set working directory
@@ -17,9 +19,12 @@ WORKDIR /app
 # Copy project files
 COPY . .
 
-# Install dependencies
+# Upgrade pip and install Python dependencies
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
-# Run the app with Gunicorn
+# Collect static files
+RUN python manage.py collectstatic --noinput
+
+# Run the Django app with Gunicorn
 CMD ["gunicorn", "TCP_facial_recognition_project.wsgi"]
