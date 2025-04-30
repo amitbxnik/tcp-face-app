@@ -1,1 +1,1 @@
-web: gunicorn amit-banik-tcp-face-app.wsgi
+web: gunicorn TCP_facial_recognition_project.wsgi
