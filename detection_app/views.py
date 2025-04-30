@@ -87,6 +87,8 @@ def gen_frames():
 
 def video_feed(request):
     # streams the processed video to the frontend
+    if not settings.DEBUG:
+        return HttpResponse("Live camera not available in production.", status=503)
     ensure_faces_loaded()
     return StreamingHttpResponse(gen_frames(), 
                                 content_type="multipart/x-mixed-replace; boundary=frame")
