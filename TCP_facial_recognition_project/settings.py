@@ -29,7 +29,8 @@ SECRET_KEY = os.environ.get("SECRET_KEY", "unsafe-dev-key")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", "False") == "True"
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ["web-production-4f8ce.up.railway.app"]
+CSRF_TRUSTED_ORIGINS = ["https://web-production-4f8ce.up.railway.app"]
 
 
 # Application definition
