@@ -19,6 +19,7 @@ pillow==11.1.0
 PyQt6==6.8.1
 PyQt6-Qt6==6.8.2
 PyQt6_sip==13.10.0
+python-dotenv==1.1.0
 sqlparse==0.5.3
 typing_extensions==4.13.2
 Werkzeug==3.1.3

@@ -1,1 +1,1 @@
-web: gunicorn tcp-face-app.wsgi
+web: gunicorn amit-banik-tcp-face-app.wsgi
