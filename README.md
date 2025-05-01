@@ -117,43 +117,6 @@ To deploy using these configurations, follow your platform’s guide and point i
 
 ---
 
-## Features
-
-- Upload and process images via web UI
-- Perform face detection or recognition
-- Modular design with clean separation between views and detection engine
-- Django backend with customizable routing
-
----
-
-## Setup Instructions
-
-1. **Clone the repository**
-
-```bash
-git clone https://github.com/yourusername/your-repo.git
-cd your-repo
-```
-
-2. **Create a virtual environment & install dependencies**
-
-```bash
-python3 -m venv venv
-source venv/bin/activate  # or venv\Scripts\activate on Windows
-pip install -r requirements.txt
-```
-
-3. **Run migrations & start the server**
-
-```bash
-python manage.py migrate
-python manage.py runserver
-```
-
-4. Open your browser at `http://127.0.0.1:8000`
-
----
-
 ## Requirements
 
 - Python 3.8+
