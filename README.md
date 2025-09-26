@@ -1,4 +1,4 @@
-# Face Recognition Application for UNIV 3000 Technical Competency Project
+# Face Recognition Application
 
 This is a web-based face recognition app built with Django on the backend and styled using HTML + Bootstrap on the frontend. It uses OpenCV and the face_recognition Python library to perform real-time facial detection and recognition on uploaded images or snapshots taken directly from the user's browser.
 
